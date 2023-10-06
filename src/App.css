@@ -112,3 +112,7 @@
 .bd-mode-toggle .dropdown-menu .active .bi {
   display: block !important;
 }
+
+.carousel-item img{
+  border: 1px solid black;
+}
