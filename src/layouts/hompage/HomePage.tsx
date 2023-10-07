@@ -1,14 +1,14 @@
 import React from "react";
 import Banner from "./components/Banner";
-import Carousel from "./components/Carousel";
 import DanhSachSanrPham from "../product/DanhSachSanPham";
+import DanhSachCarousel from "../product/DanhSachCarousel";
 
 function HomePage(){
     return(
         <div>
             <Banner />
             <br/>
-            <Carousel />
+            <DanhSachCarousel />
             <br/>
             <br/>
             <DanhSachSanrPham />

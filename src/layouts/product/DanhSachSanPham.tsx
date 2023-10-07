@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import SachModel from "../../models/SachModel";
 import SachProps from "./components/SachProps";
 import { layToanBoSach } from "../../api/SachAPI";
-import { error } from "console";
 
 const DanhSachSanrPham: React.FC = ()=>{
     
@@ -51,6 +50,7 @@ const DanhSachSanrPham: React.FC = ()=>{
                 }
             </div>
         </div>
+        
     )
 }
 

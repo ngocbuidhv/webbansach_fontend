@@ -53,7 +53,7 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
     }
 
     return (
-        <div className="col-md-3 mt-2">
+        <div className="col-md-3 mt-5">
             <div className="card">
                 <img
                     src={duLieuAnh}
