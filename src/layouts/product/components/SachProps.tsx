@@ -4,7 +4,7 @@ import HinhAnhModel from "../../../models/HinhAnhModel";
 import { layToanBoAnhCuaMotSach } from "../../../api/HinhAnhAPI";
 
 
-interface SachPropsInterface{
+interface SachPropsInterface {
     sach: SachModel;
 }
 
@@ -18,7 +18,7 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
 
     useEffect(() => {
         layToanBoAnhCuaMotSach(maSach).then(
-            hinhAnhData =>{
+            hinhAnhData => {
                 setDanhSachAnh(hinhAnhData);
                 setDangTaiDuLieu(false);
             }
@@ -47,9 +47,9 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
         );
     }
 
-    let duLieuAnh:string="";
-    if(danhSachAnh[0] && danhSachAnh[0].duLieuAnh){
-        duLieuAnh=danhSachAnh[0].duLieuAnh;
+    let duLieuAnh: string = "";
+    if (danhSachAnh[0] && danhSachAnh[0].duLieuAnh) {
+        duLieuAnh = danhSachAnh[0].duLieuAnh;
     }
 
     return (
@@ -65,12 +65,15 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
                     <h5 className="card-title">{props.sach.tenSach}</h5>
                     <p className="card-text">{props.sach.moTa}</p>
                     <div className="price">
-                        <span className="original-price">
-                            <del>{props.sach.giaNiemYet}</del>
+                        <span className=" discounted-price">
+                            <del style={{ color: 'red'}}>
+                                {props.sach.giaNiemYet}đ
+                            </del>
                         </span>
-                        <span className="discounted-price">
-                            <strong>{props.sach.giaBan}</strong>
+                        <span className="original-price" style={{marginLeft: '10px' }}>
+                            <strong>{props.sach.giaBan}đ</strong>
                         </span>
+
                     </div>
                     <div className="row mt-2" role="group">
                         <div className="col-6">
