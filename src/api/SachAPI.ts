@@ -2,30 +2,66 @@ import React from "react";
 import SachModel from "../models/SachModel";
 import { my_request } from "./Request";
 
+interface KetQuaInterface{
+    ketQua: SachModel[];
+    tongSoTrang: number;
+    tongSoSach: number;
+}
 
-export async function layToanBoSach():Promise<SachModel[]>{
-    const ketQua:SachModel[] = [];
-    // xác định endpoint
-    const duongDan:string = 'http://localhost:8080/sach';
+async function laySach(duongDan: string): Promise<KetQuaInterface> {
+    const ketQua: SachModel[] = [];
 
     // Gọi phương thức request
-    const response =  await my_request(duongDan);
+    const response = await my_request(duongDan);
 
-    // lấy ra json sach
+    // Lấy ra json sach
     const responseData = response._embedded.saches;
     console.log(responseData);
 
-    for(const key in responseData){
+    // lấy thông tin trang
+    const tongSoTrang:number = response.page.totalPages;
+    const tongSoSach: number = response.page.totalElements;
+
+    for (const key in responseData) {
         ketQua.push({
             maSach: responseData[key].maSach,
-            tenSach: responseData[key].tenSach, // có thể bị null
+            tenSach: responseData[key].tenSach,
             giaBan: responseData[key].giaBan,
             giaNiemYet: responseData[key].giaNiemYet,
-            moTa: responseData[key].moTa,
-            soLuong: responseData[key].soLuong,
-            tenTacGia: responseData[key].tenTacGia,
-            trungBinhXepHang: responseData[key].trungBinhXepHang,
+            moTa:responseData[key].moTa,
+            soLuong:responseData[key].soLuong,
+            tenTacGia:responseData[key].tenTacGia,
+            trungBinhXepHang:responseData[key].trungBinhXepHang
         });
     }
-    return ketQua;
+
+    return {ketQua: ketQua, tongSoSach: tongSoTrang, tongSoTrang: tongSoTrang};
+}
+
+export async function layToanBoSach(trang: number): Promise<KetQuaInterface> {
+   
+    // Xác định endpoint
+    const duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=8&page=${trang}`;
+
+    return laySach(duongDan);
+
+}
+
+export async function layToanBoSachHotBook(): Promise<KetQuaInterface> {
+   
+    // Xác định endpoint
+    const duongDan: string = 'http://localhost:8080/sach?sort=maSach';
+
+    return laySach(duongDan);
+
+}
+
+
+export async function lay3SachMoiNhat(): Promise<KetQuaInterface> {
+   
+    // Xác định endpoint
+    const duongDan: string = 'http://localhost:8080/sach?sort=maSach,desc&page=0&size=3';
+
+    return laySach(duongDan);
+
 }

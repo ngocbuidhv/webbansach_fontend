@@ -1,65 +1,68 @@
 import React, { useEffect, useState } from "react";
+import { lay3SachMoiNhat } from "../../../api/SachAPI";
 import SachModel from "../../../models/SachModel";
-import HinhAnhModel from "../../../models/HinhAnhModel";
-import { layToanBoAnhCuaMotSach } from "../../../api/HinhAnhAPI";
+import CarouselItem from "./CarouselItem";
 
-interface CarouselInterface{
-    sach: SachModel;
-}
 
-const Carousel: React.FC<CarouselInterface> = (props) => {
-
-    const maSach:number = props.sach.maSach;
-
-    const [danhSachAnh, setDanhSachAnh] = useState<HinhAnhModel[]>([]);
+const Carousel: React.FC = () => {
+    const [danhSachQuyenSach, setDanhSachQuyenSach] = useState<SachModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
     const [baoLoi, setBaoLoi] = useState(null);
 
     useEffect(() => {
-      layToanBoAnhCuaMotSach(maSach).then(
-        hinhAnhData =>{
-            setDanhSachAnh(hinhAnhData);
-            setDangTaiDuLieu(false);
-        }
-      ).catch(
-        error => {
-            setDangTaiDuLieu(false);
-            setBaoLoi(error.message);
-        }
-      );
-    }, [])
-    
-    if (dangTaiDuLieu){
-        return(
+        lay3SachMoiNhat().then(
+            kq => {
+                setDanhSachQuyenSach(kq.ketQua);
+                setDangTaiDuLieu(false);
+            }
+        ).catch(
+            error => {
+                setDangTaiDuLieu(false);
+                setBaoLoi(error.message);
+            }
+        );
+    }, [] // Chi goi mot lan
+    )
+
+    if (dangTaiDuLieu) {
+        return (
             <div>
-                <h5>Đang tải dữ liệu</h5>
+                <h1>Đang tải dữ liệu</h1>
             </div>
         );
     }
 
-    if(baoLoi){
-        return(
+    if (baoLoi) {
+        return (
             <div>
-                <h5>Gặp lỗi: {baoLoi}</h5>
+                <h1>Gặp lỗi: {baoLoi}</h1>
             </div>
         );
     }
 
-    let duLieuAnh:string="";
-    if(danhSachAnh[0] && danhSachAnh[0].duLieuAnh){
-        duLieuAnh=danhSachAnh[0].duLieuAnh;
-    }
 
     return (
-        <div className="row align-items-center">
-            <div className="col-lg-5 col-md-6 text-center">
-                <img src={duLieuAnh} alt={props.sach.tenSach} className="img-fluid" style={{ maxWidth: '100%' }} />
-            </div>
-            <div className="col-lg-7 col-md-6">
-                <div className="text-center text-md-start">
-                    <h3 className="display-4">{props.sach.tenSach}</h3>
-                    <p className="lead">{props.sach.moTa}</p>
+        <div>
+            <div id="carouselExampleDark" className="carousel carousel-dark slide">
+                <div className="carousel-inner">
+                    <div className="carousel-item active" data-bs-interval="10000">
+                        <CarouselItem key={0} sach={danhSachQuyenSach[0]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={1} sach={danhSachQuyenSach[1]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={2} sach={danhSachQuyenSach[2]} />
+                    </div>
                 </div>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
     );

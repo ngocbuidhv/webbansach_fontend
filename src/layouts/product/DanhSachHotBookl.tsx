@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Carousel from "../hompage/components/Carousel";
-import { layToanBoSach } from "../../api/SachAPI";
+import Carousel from "../hompage/components/HotBooks";
+import { layToanBoSach, layToanBoSachHotBook } from "../../api/SachAPI";
 import SachModel from "../../models/SachModel";
 
-const DanhSachCarousel: React.FC = () => {
+const DanhSachHotbook: React.FC = () => {
 
     const [danhSachQuyenSach, setDanhSachQuyenSach] = useState<SachModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
     const [baoLoi, setBaoLoi] = useState(null);
 
+
     useEffect(() => {
-        layToanBoSach().then(
-            sachData => {
-                setDanhSachQuyenSach(sachData);
+        layToanBoSachHotBook().then(
+            kq => {
+                setDanhSachQuyenSach(kq.ketQua);
                 setDangTaiDuLieu(false);
             }
         ).catch(
@@ -72,4 +73,4 @@ const DanhSachCarousel: React.FC = () => {
     )
 }
 
-export default DanhSachCarousel;
+export default DanhSachHotbook;
