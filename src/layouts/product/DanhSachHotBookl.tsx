@@ -42,7 +42,7 @@ const DanhSachHotbook: React.FC = () => {
 
     return (
         <div>
-            <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div id="carouselExampleLight" className="carousel carousel-light slide" data-bs-ride="carousel">
                 <div className="carousel-inner"></div>
                 <div className="container">
 

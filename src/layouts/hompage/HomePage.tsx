@@ -1,23 +1,26 @@
 import React from "react";
 import Banner from "./components/Banner";
-import DanhSachSanrPham from "../product/DanhSachSanPham";
+import DanhSachSanPham from "../product/DanhSachSanPham";
 import DanhSachCarousel from "../product/DanhSachHotBookl";
 import Hotbook from "./components/Slide";
 import Slide from "./components/Slide";
 import DanhSachHotbook from "../product/DanhSachHotBookl";
 import Carousel from "./components/Carousel";
 
-function HomePage() {
+interface HomePageProps{
+    tuKhoaTimKiem: string
+}
+function HomePage({tuKhoaTimKiem} : HomePageProps) {
     return (
         <div>
             <Banner />
             <Slide />
 
-            {/* liệt kê toàn bộ sách trên một băng chuyền */}
-            {/* <h5>
+            {/* liệt kê toàn bộ sách trên một băng chuyền
+            <h5>
                 <strong>Sách đề cử</strong>
             </h5>
-            <DanhSachHotbook /> */}
+            <DanhSachHotbook />  */}
 
             <h5>
                 <strong>Sách mới nhất</strong>
@@ -28,7 +31,7 @@ function HomePage() {
                 <strong>Thư viện sách</strong>
             </h5>
 
-            <DanhSachSanrPham />
+            <DanhSachSanPham tuKhoaTimKiem={tuKhoaTimKiem}/>
         </div>
 
     );

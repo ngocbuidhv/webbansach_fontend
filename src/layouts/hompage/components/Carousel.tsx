@@ -54,6 +54,27 @@ const Carousel: React.FC = () => {
                     <div className="carousel-item " data-bs-interval="10000">
                         <CarouselItem key={2} sach={danhSachQuyenSach[2]} />
                     </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={3} sach={danhSachQuyenSach[3]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={4} sach={danhSachQuyenSach[4]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={5} sach={danhSachQuyenSach[5]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={6} sach={danhSachQuyenSach[6]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={7} sach={danhSachQuyenSach[7]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={8} sach={danhSachQuyenSach[8]} />
+                    </div>
+                    <div className="carousel-item " data-bs-interval="10000">
+                        <CarouselItem key={9} sach={danhSachQuyenSach[9]} />
+                    </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>

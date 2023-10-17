@@ -42,6 +42,7 @@ export const PhanTrang: React.FC<PhanTrangInterface> = (props) => {
     }
 
     return (
+        <div className="container">
         <nav aria-label="...">
             <ul className="pagination">
                 <li className="page-item" onClick={()=>props.phanTrang(1)}>
@@ -65,5 +66,6 @@ export const PhanTrang: React.FC<PhanTrangInterface> = (props) => {
                 </li>
             </ul>
         </nav>
+        </div>
     )
 }
