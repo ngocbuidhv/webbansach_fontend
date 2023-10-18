@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import SachModel from "../../../models/SachModel";
 import HinhAnhModel from "../../../models/HinhAnhModel";
 import { layToanBoAnhCuaMotSach } from "../../../api/HinhAnhAPI";
+import { Link } from "react-router-dom";
+import { text } from "stream/consumers";
 
 
 interface SachPropsInterface {
@@ -55,22 +57,26 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
     return (
         <div className="col-md-3 mt-5">
             <div className="card">
-                <img
-                    src={duLieuAnh}
-                    className="card-img-top"
-                    alt={props.sach.tenSach}
-                    style={{ height: '280px' }}
-                />
+                <Link to={`/sach/${props.sach.maSach}`}>
+                    <img
+                        src={duLieuAnh}
+                        className="card-img-top"
+                        alt={props.sach.tenSach}
+                        style={{ height: '280px' }}
+                    />
+                </Link>
                 <div className="card-body">
-                    <h5 className="card-title">{props.sach.tenSach}</h5>
+                    <Link to={`/sach/${props.sach.maSach}`}  style = {{textDecoration: 'none'}}>
+                        <h5 className="card-title">{props.sach.tenSach}</h5>
+                    </Link>
                     <p className="card-text">{props.sach.moTa}</p>
                     <div className="price">
                         <span className=" discounted-price">
-                            <del style={{ color: 'red'}}>
+                            <del style={{ color: 'red' }}>
                                 {props.sach.giaNiemYet}đ
                             </del>
                         </span>
-                        <span className="original-price" style={{marginLeft: '10px' }}>
+                        <span className="original-price" style={{ marginLeft: '10px' }}>
                             <strong>{props.sach.giaBan}đ</strong>
                         </span>
 

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import SachModel from "../../models/SachModel";
 import SachProps from "./components/SachProps";
 import { layToanBoSach, timKiemSach } from "../../api/SachAPI";
 import { PhanTrang } from "../utils/PhanTrang";
+import SachModel from "../../models/SachModel";
 
 interface DanhSachSanPhamProps {
     tuKhoaTimKiem: string;
+    maTheLoai: number;
 }
-function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
+function DanhSachSanPham({ tuKhoaTimKiem, maTheLoai }: DanhSachSanPhamProps) {
 
     const [danhSachQuyenSach, setDanhSachQuyenSach] = useState<SachModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
@@ -19,7 +20,8 @@ function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
     console.log(trangHienTai);
 
     useEffect(() => {
-        if (tuKhoaTimKiem === ``) {
+
+        if (tuKhoaTimKiem === '' && maTheLoai == 0) {
             layToanBoSach(trangHienTai - 1).then(
                 kq => {
                     setDanhSachQuyenSach(kq.ketQua);
@@ -32,9 +34,8 @@ function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
                     setBaoLoi(error.message);
                 }
             );
-        }
-        else {
-            timKiemSach(tuKhoaTimKiem).then(
+        }else{
+            timKiemSach(tuKhoaTimKiem, maTheLoai).then(
                 kq => {
                     setDanhSachQuyenSach(kq.ketQua);
                     setTongSoTrang(kq.tongSoTrang);
@@ -47,7 +48,7 @@ function DanhSachSanPham({ tuKhoaTimKiem }: DanhSachSanPhamProps) {
                 }
             );
         }
-    }, [trangHienTai, tuKhoaTimKiem]);
+    }, [trangHienTai, tuKhoaTimKiem, maTheLoai]); 
 
     const phanTrang = (trang: number) => {
         setTrangHienTai(trang);
