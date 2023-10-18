@@ -7,6 +7,7 @@ import DanhSachSanrPham from './layouts/product/DanhSachSanPham';
 import Navbar from './layouts/header-footer/Navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import About from './layouts/about/About';
+import ChiTietSanPham from './layouts/product/ChiTietSanPham';
 
 function App() {
   const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
