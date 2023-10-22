@@ -42,7 +42,7 @@ async function laySach(duongDan: string): Promise<KetQuaInterface> {
 export async function layToanBoSach(trang: number): Promise<KetQuaInterface> {
 
     // Xác định endpoint
-    const duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=16&page=${trang}`;
+    const duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=12&page=${trang}`;
 
     return laySach(duongDan);
 
@@ -70,7 +70,7 @@ export async function lay3SachMoiNhat(): Promise<KetQuaInterface> {
 export async function timKiemSach(tuKhoaTimKiem: string, maTheLoai: number): Promise<KetQuaInterface> {
 
     // Xác định endpoint
-    let duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=16&page=0`;
+    let duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=12&page=0`;
 
     if (tuKhoaTimKiem !== '' && maTheLoai == 0) {
         duongDan = `http://localhost:8080/sach/search/findByTenSachContaining?sort=maSach,desc&size=16&page=0&tenSach=${tuKhoaTimKiem}`

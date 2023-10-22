@@ -4,7 +4,7 @@ import SachModel from "../../../models/SachModel";
 import CarouselItem from "./CarouselItem";
 
 
-const Carousel: React.FC = () => {
+const Carousel: React.FC = (props) => {
     const [danhSachQuyenSach, setDanhSachQuyenSach] = useState<SachModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
     const [baoLoi, setBaoLoi] = useState(null);

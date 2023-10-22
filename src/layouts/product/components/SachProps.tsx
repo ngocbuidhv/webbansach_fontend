@@ -67,21 +67,23 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
                 </Link>
                 <div className="card-body">
                     <Link to={`/sach/${props.sach.maSach}`}  style = {{textDecoration: 'none'}}>
-                        <h5 className="card-title">{props.sach.tenSach}</h5>
+                        <h5 className="card-title" style={{textAlign: 'center'}}>{props.sach.tenSach}</h5>
                     </Link>
-                    <p className="card-text">{props.sach.moTa}</p>
-                    <div className="price">
+                    {/* <p className="card-text" style={{textAlign: 'center'}}>{props.sach.moTa}</p> */}
+                    <div className="price" style={{textAlign: 'center'}}>
                         <span className=" discounted-price">
                             <del style={{ color: 'red' }}>
-                                {props.sach.giaNiemYet}đ
+                                {Number(props.sach.giaNiemYet).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                             </del>
                         </span>
-                        <span className="original-price" style={{ marginLeft: '10px' }}>
-                            <strong>{props.sach.giaBan}đ</strong>
+                        <span className="original-price" style={{ marginLeft: '20px' }}>
+                            <strong>
+                                {Number(props.sach.giaBan).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                            </strong>
                         </span>
 
                     </div>
-                    <div className="row mt-2" role="group">
+                    <div className="row mt-2" role="group" style={{textAlign: 'center'}}>
                         <div className="col-6">
                             <a href="#" className="btn btn-secondary btn-block">
                                 <i className="fas fa-heart"></i>
@@ -96,6 +98,7 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
                 </div>
             </div>
         </div>
+
     );
 }
 export default SachProps;

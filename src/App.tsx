@@ -11,20 +11,18 @@ import ChiTietSanPham from './layouts/product/ChiTietSanPham';
 
 function App() {
   const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
+
   return (
     <div className='App'>
       <BrowserRouter>
-      <Navbar tuKhoaTimKiem = {tuKhoaTimKiem} setTuKhoaTimKiem = {setTuKhoaTimKiem}/>
-      <Routes>
-      <Route path='/' element={<HomePage tuKhoaTimKiem={tuKhoaTimKiem} />}/>
-        <Route path='/:maTheLoai' element={<HomePage tuKhoaTimKiem={tuKhoaTimKiem} />}/>
-        <Route path='/about' element={<About />}/>
-        <Route path='/sach/:maSach' element={<ChiTietSanPham/>}/>
-      </Routes>
-      <br/>
-      <br/>
-      <hr/>
-      <Footer />
+        <Navbar tuKhoaTimKiem={tuKhoaTimKiem}  setTuKhoaTimKiem={setTuKhoaTimKiem}/>
+        <Routes>
+             <Route path='/' element={<HomePage tuKhoaTimKiem={tuKhoaTimKiem} />} />
+             <Route path='/:maTheLoai' element={<HomePage tuKhoaTimKiem={tuKhoaTimKiem} />} />
+             <Route path='/about' element={<About />} />
+             <Route path='/sach/:maSach' element={<ChiTietSanPham />} />
+        </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   );
