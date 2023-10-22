@@ -6,6 +6,9 @@ import { text } from "stream/consumers";
 import { Carousel } from "react-responsive-carousel";
 import DanhGiaModel from "../../../models/DanhGiaModel";
 import { layToanBoDanhGiaCuaMotSach } from "../../../api/DanhGiaAPI";
+import { Star, StarFill, StarHalf } from "react-bootstrap-icons";
+import { render } from "@testing-library/react";
+import renderRating from "../../utils/SaoXepHang";
 
 
 interface DanhGiaSanPham {
@@ -35,6 +38,9 @@ const DanhGiaSanPham: React.FC<DanhGiaSanPham> = (props) => {
     }, [] // Chi goi mot lan
     )
 
+
+
+
     console.log(danhSachDanhGia.length);
 
     // console.log(danhSachDanhGia.length);
@@ -57,36 +63,23 @@ const DanhGiaSanPham: React.FC<DanhGiaSanPham> = (props) => {
 
     return (
         <div className="container mt-2 mb-2 text-center">
-            <h4>Đánh giá sản phẩm: </h4>
-            {
-                danhSachDanhGia.map((danhGia, index) => (
-                    <div className="d-flex ">
-                        <div>
-                            <p>{danhGia.diemXepHang} </p>
-                        </div>
-                        <hr/>
-                            <div className="rating">
-                                Đánh giá:
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">★</span>
-                                <span className="star">☆</span>
-                            </div>
-
-                            <div>
-                                <p>Nhận xét: </p>
-                                <p className="ms-3">{danhGia.nhanXet}</p>
-                            </div>
-
-                        </div>
-                        )
-                        )
-            }
-
-
-
+            <h4>ĐÁNH GIÁ VÀ NHẬN XÉT:</h4>
+            {danhSachDanhGia.map((danhGia, index) => (
+                <div className="row mt-3" key={index}>
+                    <div className="col-4 text-end">
+                        <p>{renderRating(danhGia.diemXepHang || 0)}</p>
+                        <p><strong>Rating:</strong> {danhGia.diemXepHang}</p>
                     </div>
-                );
+                    <div className="col-8 text-start border-start ps-3">
+                        <br/>
+                        <p><strong>Review:</strong> {danhGia.nhanXet}</p>
+                    </div>
+                    <hr/>
+                </div>
+            ))}
+        
+        </div>
+        
+    );
 }
-            export default DanhGiaSanPham;
+export default DanhGiaSanPham;

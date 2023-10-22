@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import { Search } from "react-bootstrap-icons";
 import { Link, NavLink } from "react-router-dom";
 interface NavbarProps {
   tuKhoaTimKiem: string;
@@ -80,9 +81,9 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
         value={tuKhoaTamThoi}
         onKeyUp={handleKeyUp} // Sử dụng sự kiện onKeyUp thay thế
       />
-      <button className="btn btn-outline-success" type="button" onClick={handerSearch}>
-        Search
-      </button>
+       <button className="btn btn-outline-success" type="button" onClick={handerSearch}>
+              <Search />
+          </button>
     </div>
 
         {/* Biểu tượng giỏ hàng */}

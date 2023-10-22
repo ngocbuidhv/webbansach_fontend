@@ -4,6 +4,7 @@ import HinhAnhModel from "../../../models/HinhAnhModel";
 import { layToanBoAnhCuaMotSach } from "../../../api/HinhAnhAPI";
 import { Link } from "react-router-dom";
 import { text } from "stream/consumers";
+import dinhDangSo from "../../utils/DinhDangSo";
 
 
 interface SachPropsInterface {
@@ -73,12 +74,12 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
                     <div className="price" style={{textAlign: 'center'}}>
                         <span className=" discounted-price">
                             <del style={{ color: 'red' }}>
-                                {Number(props.sach.giaNiemYet).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                {dinhDangSo(props.sach.giaNiemYet)} đ
                             </del>
                         </span>
                         <span className="original-price" style={{ marginLeft: '20px' }}>
                             <strong>
-                                {Number(props.sach.giaBan).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                {dinhDangSo(props.sach.giaBan)} đ
                             </strong>
                         </span>
 

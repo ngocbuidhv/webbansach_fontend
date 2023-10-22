@@ -25,7 +25,7 @@ function HomePage({ tuKhoaTimKiem }: HomePageProps) {
     return (
         <div>
             <Banner />
-            <Slide />
+            {/* <Slide /> */}
 
             {/* liệt kê toàn bộ sách trên một băng chuyền
             <h5>

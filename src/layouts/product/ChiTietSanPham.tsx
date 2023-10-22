@@ -8,6 +8,8 @@ import { laySachTheoMaSach } from "../../api/SachAPI";
 import { error } from "console";
 import DanhGiaSanPham from "./components/DanhGiaSanPham";
 import HinhAnhSanPham from "./components/HinhAnhSanPham";
+import renderRating from "../utils/SaoXepHang";
+import dinhDangSo from "../utils/DinhDangSo";
 
 
 
@@ -109,12 +111,12 @@ const ChiTietSanPham: React.FC = () => {
                             <h1>
                                 {sach.tenSach}
                             </h1>
-                            {/* <h4>
+                            <h4>
                                 {renderRating(sach.trungBinhXepHang ? sach.trungBinhXepHang : 0)}
                             </h4>
                             <h4>
-                                {dinhDanhSo(sach.giaBan)} đ
-                            </h4> */}
+                                {dinhDangSo(sach.giaBan)} đ
+                            </h4>
                             <hr />
                             <div dangerouslySetInnerHTML={{ __html: (sach.moTa + '') }} />
                             <hr />
@@ -137,7 +139,7 @@ const ChiTietSanPham: React.FC = () => {
                                     sach.giaBan && (
                                         <div className="mt-2 text-center">
                                             Số tiền tạm tính <br />
-                                            {/* <h4>{dinhDangSo(soLuong * sach.giaBan)} đ</h4> */}
+                                            <h4>{dinhDangSo(soLuong * sach.giaBan)} đ</h4>
                                         </div>
                                     )
                                 }
