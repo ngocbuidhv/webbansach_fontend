@@ -36,7 +36,8 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
             <li className="nav-item">
-              <NavLink className="nav-link active" aria-current="page" to ="/">Trang chủ</NavLink>
+            <NavLink className="nav-link active" aria-current="page" to ="/sach" onClick={() => window.location.href = '/'}>Trang chủ</NavLink>
+
             </li>
 
             <li className="nav-item dropdown">

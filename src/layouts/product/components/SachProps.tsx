@@ -18,7 +18,7 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
     const [danhSachAnh, setDanhSachAnh] = useState<HinhAnhModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
     const [baoLoi, setBaoLoi] = useState(null);
-
+    
     useEffect(() => {
         layToanBoAnhCuaMotSach(maSach).then(
             hinhAnhData => {

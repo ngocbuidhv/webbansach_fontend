@@ -41,7 +41,7 @@ const ChiTietSanPham: React.FC = () => {
         }
     }
     const giamSoLuong = () => {
-        if (soLuong > 2) {
+        if (soLuong >= 2) {
             setSoLuong(soLuong - 1);
         }
     }
@@ -57,6 +57,7 @@ const ChiTietSanPham: React.FC = () => {
     const handleMuaNgay = () => {
 
     }
+    
     const handleThemVaoGioHang = () => {
 
     }

@@ -36,7 +36,6 @@ const HinhAnhSanPham: React.FC<HinhAnhSanPham> = (props) => {
     )
 
 
-
     // console.log(danhSachAnh.length);
 
     if (dangTaiDuLieu) {
@@ -54,6 +53,8 @@ const HinhAnhSanPham: React.FC<HinhAnhSanPham> = (props) => {
             </div>
         );
     }
+const a = [1,2,3,3,3]
+const b = []
 
     return (
         <div className="row">

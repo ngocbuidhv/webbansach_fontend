@@ -62,16 +62,17 @@ const DanhGiaSanPham: React.FC<DanhGiaSanPham> = (props) => {
     }
 
     return (
-        <div className="container mt-2 mb-2 text-center">
+        <div className=" text-center">
             <h4>ĐÁNH GIÁ VÀ NHẬN XÉT:</h4>
             {danhSachDanhGia.map((danhGia, index) => (
                 <div className="row mt-3" key={index}>
-                    <div className="col-4 text-end">
-                        <p>{renderRating(danhGia.diemXepHang || 0)}</p>
-                        <p><strong>Rating:</strong> {danhGia.diemXepHang}</p>
+                    <div className="col-6 text-start border-end ps-3">
+                    <p><strong>Rating:</strong> {danhGia.diemXepHang} sao</p>
+                        <p>người dùng</p>
                     </div>
-                    <div className="col-8 text-start border-start ps-3">
-                        <br/>
+                    <div className="col-6 text-start border-start ps-3">
+                    <p>{renderRating(danhGia.diemXepHang || 0)}</p>
+                    
                         <p><strong>Review:</strong> {danhGia.nhanXet}</p>
                     </div>
                     <hr/>
