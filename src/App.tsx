@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import About from './layouts/about/About';
 import ChiTietSanPham from './layouts/product/ChiTietSanPham';
 import DangKyNguoiDung from './layouts/user/DangKyNguoiDung';
+import KichHoatTaiKhoan from './layouts/user/KichHoatTaiKhoan';
 
 function App() {
   const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
@@ -22,7 +23,8 @@ function App() {
              <Route path='/:maTheLoai' element={<HomePage tuKhoaTimKiem={tuKhoaTimKiem} />} />
              <Route path='/about' element={<About />} />
              <Route path='/sach/:maSach' element={<ChiTietSanPham />} />
-             <Route path='/dangKy' element={<DangKyNguoiDung />} />
+             <Route path='/dang-ky' element={<DangKyNguoiDung />} />
+             <Route path='/kich-hoat/:email/:maKichHoat' element={<KichHoatTaiKhoan/>} />
         </Routes>
         <Footer/>
       </BrowserRouter>

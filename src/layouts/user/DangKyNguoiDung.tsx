@@ -52,7 +52,9 @@ function DangKyNguoiDung(){
                         hoDem: hoDem,
                         ten: ten,
                         soDienThoai: soDienThoai,
-                        gioiTinh: gioiTinh
+                        gioiTinh: gioiTinh,
+                        daKichHoat: 0,
+                        maKichHoat: ""
                     })
                 }
                 );
