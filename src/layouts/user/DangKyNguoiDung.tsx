@@ -182,6 +182,7 @@ function DangKyNguoiDung(){
 
     return (
         <div className="container">
+             <div className='container mt-4' style={{ maxWidth: '900px', margin: '0 auto', padding: '2em', background: '#f7f7f7', borderRadius: '8px', border: '1px solid #007BFF', boxShadow: '5px 5px 15px rgba(0,0,0,0.1)' }}>
             <h1 className="mt-5 text-center">Đăng ký</h1>
             <div className="mb-3 col-md-6 col-12 mx-auto">
                 <form onSubmit={handleSubmit} className="form">
@@ -269,13 +270,14 @@ function DangKyNguoiDung(){
                             onChange={(e) => setGioiTinh(e.target.value)}
                         />
                     </div>
-                    <div className="text-center">
+                    <div className="text-center mt-4">
                         <button type="submit" className="btn btn-primary">Đăng Ký</button>
                         <div style={{ color: "green" }}>{thongBao}</div>
 
                     </div>
                 </form>
             </div>
+        </div>
         </div>
 
     );

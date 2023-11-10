@@ -10,6 +10,8 @@ import About from './layouts/about/About';
 import ChiTietSanPham from './layouts/product/ChiTietSanPham';
 import DangKyNguoiDung from './layouts/user/DangKyNguoiDung';
 import KichHoatTaiKhoan from './layouts/user/KichHoatTaiKhoan';
+import DangNhap from './layouts/user/DangNhap';
+import Test from './layouts/user/Test';
 
 function App() {
   const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
@@ -25,6 +27,8 @@ function App() {
              <Route path='/sach/:maSach' element={<ChiTietSanPham />} />
              <Route path='/dang-ky' element={<DangKyNguoiDung />} />
              <Route path='/kich-hoat/:email/:maKichHoat' element={<KichHoatTaiKhoan/>} />
+             <Route path='/dang-nhap' element={<DangNhap />} />
+             <Route path='/test' element={<Test />} />
         </Routes>
         <Footer/>
       </BrowserRouter>
