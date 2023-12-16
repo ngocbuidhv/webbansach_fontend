@@ -8,10 +8,14 @@ import Navbar from './layouts/header-footer/Navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import About from './layouts/about/About';
 import ChiTietSanPham from './layouts/product/ChiTietSanPham';
+import SachForm from './layouts/admin/FormThemSach';
 import DangKyNguoiDung from './layouts/user/DangKyNguoiDung';
 import KichHoatTaiKhoan from './layouts/user/KichHoatTaiKhoan';
 import DangNhap from './layouts/user/DangNhap';
 import Test from './layouts/user/Test';
+import ProfileCaNhan from './layouts/user/ProfileCaNhan';
+import FormThemSach from './layouts/admin/FormThemSach';
+import FormSuaSach from './layouts/admin/FormSuaSach';
 
 function App() {
   const [tuKhoaTimKiem, setTuKhoaTimKiem] = useState('');
@@ -29,6 +33,10 @@ function App() {
              <Route path='/kich-hoat/:email/:maKichHoat' element={<KichHoatTaiKhoan/>} />
              <Route path='/dang-nhap' element={<DangNhap />} />
              <Route path='/test' element={<Test />} />
+             <Route path='/admin/them-sach' element={<FormThemSach setShowThemSach={undefined} />} />
+             <Route path='/profile' element={<ProfileCaNhan tenDangNhap={'/dang-nhap'} />} />
+             <Route path='/admin/sua-sach' element={<FormSuaSach setShowSuaSach={undefined} sach={undefined} />} />
+
         </Routes>
         <Footer/>
       </BrowserRouter>

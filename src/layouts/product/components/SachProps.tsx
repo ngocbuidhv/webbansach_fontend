@@ -72,18 +72,18 @@ const SachProps: React.FC<SachPropsInterface> = (props) => {
                     </Link>
                     {/* <p className="card-text" style={{textAlign: 'center'}}>{props.sach.moTa}</p> */}
                     <div className="price" style={{textAlign: 'center'}}>
-                        <span className=" discounted-price">
-                            <del style={{ color: 'red' }}>
-                                {dinhDangSo(props.sach.giaNiemYet)} đ
-                            </del>
-                        </span>
-                        <span className="original-price" style={{ marginLeft: '20px' }}>
+                        <span className="original-price" >
                             <strong>
                                 {dinhDangSo(props.sach.giaBan)} đ
                             </strong>
                         </span>
-
+                        <span className=" discounted-price" style={{ marginLeft: '20px' }}>
+                            <del style={{ color: 'red' }}>
+                                {dinhDangSo(props.sach.giaNiemYet)} đ
+                            </del>
+                        </span>
                     </div>
+                    
                     <div className="row mt-2" role="group" style={{textAlign: 'center'}}>
                         <div className="col-6">
                             <a href="#" className="btn btn-secondary btn-block">

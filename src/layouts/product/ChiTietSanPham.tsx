@@ -11,7 +11,10 @@ import HinhAnhSanPham from "./components/HinhAnhSanPham";
 import renderRating from "../utils/SaoXepHang";
 import dinhDangSo from "../utils/DinhDangSo";
 
-
+interface TheLoaiInterface {
+    maTheLoai: number;
+    tenTheLoai: string;
+}
 
 
 const ChiTietSanPham: React.FC = () => {
@@ -33,6 +36,7 @@ const ChiTietSanPham: React.FC = () => {
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
     const [baoLoi, setBaoLoi] = useState(null);
     const [soLuong, setSoLuong] = useState(1);
+    const [thugon, setThuGon] = useState(false);
 
     const tangSoLuong = () => {
         const soLuongTonKho = (sach && sach.soLuong ? sach.soLuong : 0);
@@ -57,10 +61,16 @@ const ChiTietSanPham: React.FC = () => {
     const handleMuaNgay = () => {
 
     }
-    
+
     const handleThemVaoGioHang = () => {
 
     }
+
+    const chuyenVanBan = () => {
+        setThuGon(!thugon);
+    }
+
+    const thuGonVanBan = sach?.moTaChiTiet && sach.moTaChiTiet.length > 900 ? `${sach.moTaChiTiet.substring(0, 900)}...` : sach?.moTaChiTiet;
 
     useEffect(() => {
         laySachTheoMaSach(maSachNumber)
@@ -112,15 +122,47 @@ const ChiTietSanPham: React.FC = () => {
                             <h1>
                                 {sach.tenSach}
                             </h1>
-                            <h4>
+                            <h3>
                                 {renderRating(sach.trungBinhXepHang ? sach.trungBinhXepHang : 0)}
-                            </h4>
-                            <h4>
-                                {dinhDangSo(sach.giaBan)} đ
-                            </h4>
+                            </h3>
+                            <h3>
+                                <span className="original-price" >
+                                    <strong style={{ color: '#474747' }}>
+                                        {dinhDangSo(sach.giaBan)} đ
+                                    </strong>
+                                </span>
+                                <span className=" discounted-price" style={{ marginLeft: '10px' }}>
+                                    <del style={{ color: '#FF7979' }}>
+                                        <em>{dinhDangSo(sach.giaNiemYet)} đ </em>
+                                    </del>
+                                </span>
+                            </h3>
                             <hr />
-                            <div dangerouslySetInnerHTML={{ __html: (sach.moTa + '') }} />
+                            <div className="row">
+                                <div className="col-12">
+                                    <p className="mb-4">
+                                        <strong>Thể loại:</strong> <em>{sach.moTa}</em>
+                                    </p>
+                                    <p className="mb-4">
+                                        <strong>Số trang sách:</strong> <em>{sach.soTrang}</em>
+                                    </p>
+                                    <p className="mb-4">
+                                        <strong>Năm xuất bản:</strong> <em>{sach.namXB}</em>
+                                    </p>
+                                    <p className="">
+                                        <strong>Ngôn ngữ:</strong> <em>{sach.ngonNgu}</em>
+                                    </p>
+
+                                </div>
+                            </div>
                             <hr />
+                            <div style={{ textAlign: 'justify', textJustify: 'inter-word', lineHeight: '1.6', maxWidth: '600px' }}>
+                                <p>
+                                    <strong>Nội dung: </strong>
+                                    {sach.moTa}
+                                </p>
+                            </div>
+
                         </div>
                         <div className="col-4">
                             <div>
@@ -140,7 +182,7 @@ const ChiTietSanPham: React.FC = () => {
                                     sach.giaBan && (
                                         <div className="mt-2 text-center">
                                             Số tiền tạm tính <br />
-                                            <h4>{dinhDangSo(soLuong * sach.giaBan)} đ</h4>
+                                            <h3><strong>{dinhDangSo(soLuong * sach.giaBan)} đ </strong></h3>
                                         </div>
                                     )
                                 }
@@ -153,6 +195,20 @@ const ChiTietSanPham: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <div>
+                <p style={{ textAlign: 'justify', textJustify: 'inter-word' }}>
+                    <strong>Nội dung: </strong>
+                    {thugon ? sach.moTaChiTiet : thuGonVanBan}
+                </p>
+                {sach.moTaChiTiet && sach.moTaChiTiet.length > 900 && (
+                    <div style={{ textAlign: 'center' }}>
+                        <button className="btn btn-danger mt-4" style={{ backgroundColor: 'orange', borderColor: 'orange' }} onClick={chuyenVanBan}>
+                            {thugon ? 'Thu gọn' : 'Xem thêm'}
+                        </button>
+                    </div>
+                )}
+            </div>
+
             <div className="row mt-4 mb-4">
                 <DanhGiaSanPham maSach={maSachNumber} />
             </div>

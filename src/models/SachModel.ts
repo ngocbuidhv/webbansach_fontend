@@ -7,6 +7,12 @@ class SachModel {
     soLuong?: number;
     tenTacGia?: string;
     trungBinhXepHang?: number;
+    soTrang?: number;
+    ngonNgu?: string;
+    namXB?: number;
+    moTaChiTiet?:string;
+    isbn?: string;
+
 
     constructor(
         maSach: number,
@@ -16,7 +22,12 @@ class SachModel {
         moTa?: string,
         soLuong?: number,
         tenTacGia?: string,
-        trungBinhXepHang?: number
+        trungBinhXepHang?: number,
+        soTrang?: number,
+        ngonNgu?: string,
+        namXB?: number,
+        moTaChiTiet?: string,
+        isbn?: string
     ){
         this.maSach = maSach;
         this.tenSach = tenSach;
@@ -26,6 +37,11 @@ class SachModel {
         this.soLuong = soLuong;
         this.tenTacGia = tenTacGia;
         this.trungBinhXepHang = trungBinhXepHang;
+        this.soTrang = soTrang;
+        this.ngonNgu = ngonNgu;
+        this.namXB = namXB;
+        this.moTaChiTiet = moTaChiTiet;
+        this.isbn = isbn;
     }
 }
 

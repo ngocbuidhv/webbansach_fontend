@@ -2,6 +2,7 @@ import React from "react";
 import SachModel from "../models/SachModel";
 import { my_request } from "./Request";
 import { wait } from "@testing-library/user-event/dist/utils";
+import { luuHinhAnhCuaMotSach } from "./HinhAnhAPI";
 
 interface KetQuaInterface {
     ketQua: SachModel[];
@@ -32,7 +33,12 @@ async function laySach(duongDan: string): Promise<KetQuaInterface> {
             moTa: responseData[key].moTa,
             soLuong: responseData[key].soLuong,
             tenTacGia: responseData[key].tenTacGia,
-            trungBinhXepHang: responseData[key].trungBinhXepHang
+            trungBinhXepHang: responseData[key].trungBinhXepHang,
+            soTrang: responseData[key].soTrang,
+            ngonNgu: responseData[key].ngonNgu,
+            namXB: responseData[key].namXB,
+            moTaChiTiet: responseData[key].moTaChiTiet,
+            isbn: responseData[key].isbn
         });
     }
 
@@ -58,7 +64,7 @@ export async function layToanBoSachHotBook(): Promise<KetQuaInterface> {
 }
 
 
-export async function lay3SachMoiNhat(): Promise<KetQuaInterface> {
+export async function lay10SachMoiNhat(): Promise<KetQuaInterface> {
 
     // Xác định endpoint
     const duongDan: string = 'http://localhost:8080/sach?sort=maSach,desc&page=0&size=10';
@@ -107,7 +113,12 @@ export async function laySachTheoMaSach(maSach: number): Promise<SachModel | nul
                 moTa: sachData.moTa,
                 soLuong: sachData.soLuong,
                 tenTacGia: sachData.tenTacGia,
-                trungBinhXepHang: sachData.trungBinhXepHang
+                trungBinhXepHang: sachData.trungBinhXepHang,
+                soTrang: sachData.soTrang,
+                ngonNgu: sachData.ngonNgu,
+                namXB: sachData.namXB,
+                moTaChiTiet: sachData.moTaChiTiet,
+                isbn: sachData.isbn
             }
         } else {
             throw new Error('Sách không tồn tại')
@@ -117,4 +128,36 @@ export async function laySachTheoMaSach(maSach: number): Promise<SachModel | nul
         console.error("Error", error);
         return null;
     }
+}
+
+export async function themMotQuyenSach(sach: any, danhSachHinhAnh: any, danhSachTheLoai: string[]) {
+    console.log(danhSachHinhAnh);
+    
+    const token = localStorage.getItem("token");
+    const url = `http://localhost:8080/sach`;
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(sach),
+    })
+        .then((reponse) => {
+            if (reponse.ok) {
+                return reponse.json();
+            } else {
+                throw new Error("Lỗi ở handleSubmit");
+            }
+        })
+        .then((data) => {
+            //sao khi lưu sách thành công ta sẽ lưu hình ảnh và thể loại
+            luuHinhAnhCuaMotSach(data, danhSachHinhAnh, token);
+            // themTheLoaiChoMotQuyenSach(data, danhSachTheLoai);
+            alert("Đã thêm sách thành công!");
+
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }

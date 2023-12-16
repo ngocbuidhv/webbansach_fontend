@@ -35,3 +35,25 @@ export async function lay1AnhCuaMotSach(maSach: number):Promise<HinhAnhModel[]>{
     const duongDan: string = `http://localhost:8080/sach/${maSach}/danhSachHinhAnh?sort=maHinhAnh,asc&page=0&size=1`;
     return layAnhCuaMotSach(duongDan);
 }
+
+export async function luuHinhAnhCuaMotSach(sach: any, danhSachHinhAnh: any, token: string | null) {
+    try {
+        const url = `http://localhost:8080/hinh-anh`;
+         for (const hinhAnh of danhSachHinhAnh) {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ ...hinhAnh, sach: `sach/${sach.maSach}` })
+            });
+            if (!response.ok) {
+                throw new Error(`Không lưu được: ${hinhAnh.tenHinhAnh}`);
+              }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+
+}

@@ -1,15 +1,17 @@
-import React, {useState } from 'react'
+import React, { useState } from "react";
 
-function DangKyNguoiDung(){
+function DangKyNguoiDung() {
 
     const [tenDangNhap, setTenDangNhap] = useState("");
     const [email, setEmail] = useState("");
-    const [hoDem, setHoDem] = useState("");
+    const [hoDem, setHoDen] = useState("");
     const [ten, setTen] = useState("");
     const [soDienThoai, setSoDienThoai] = useState("");
     const [matKhau, setMatKhau] = useState("");
     const [matKhauLapLai, setMatKhauLapLai] = useState("");
-    const [gioiTinh, setGioiTinh] = useState('M');
+    const [gioiTinh, setGioiTinh] = useState("");
+    const [avatar, setAvatar] = useState<File | null>(null);
+
 
     // Các biến báo lỗi
     const [errorTenDangNhap, setErrorTenDangNhap] = useState("");
@@ -17,6 +19,16 @@ function DangKyNguoiDung(){
     const [errorMatKhau, setErrorMatKhau] = useState("");
     const [errorMatKhauLapLai, setErrorMatKhauLapLai] = useState("");
     const [thongBao, setThongBao] = useState("");
+
+    // Convert file to Base64
+    const getBase64 = (file: File): Promise<string | null> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result ? (reader.result as string) : null);
+            reader.onerror = (error) => reject(error);
+        });
+    };
 
     // Xử lý thông tin
     const handleSubmit = async (e: React.FormEvent) => {
@@ -37,13 +49,17 @@ function DangKyNguoiDung(){
 
         // Kiểm tra tất cả các điều kiện
         if (isTenDangNhapValid && isEmailValid && isMatKhauValid && isMatKhauLapLaiValid) {
+
+            const base64Avatar = avatar ? await getBase64(avatar) : null;
+            console.log("avatar: " + base64Avatar);
+
             try {
                 const url = 'http://localhost:8080/tai-khoan/dang-ky';
 
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
-                        'Content-type' : 'application/json',
+                        'Content-type': 'application/json',
                     },
                     body: JSON.stringify({
                         tenDangNhap: tenDangNhap,
@@ -54,14 +70,15 @@ function DangKyNguoiDung(){
                         soDienThoai: soDienThoai,
                         gioiTinh: gioiTinh,
                         daKichHoat: 0,
-                        maKichHoat: ""
+                        maKichHoat: "",
+                        avatar: base64Avatar
                     })
                 }
                 );
 
-                if(response.ok){
+                if (response.ok) {
                     setThongBao("Đăng ký thành công, vui lòng kiểm tra email để kích hoạt!");
-                }else{
+                } else {
                     console.log(response.json());
                     setThongBao("Đã xảy ra lỗi trong quá trình đăng ký tài khoản.")
                 }
@@ -178,109 +195,131 @@ function DangKyNguoiDung(){
         return kiemTraMatKhauLapLai(e.target.value);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
+    // XỬ LÝ THAY ĐỔI FILE /////////////////////////////////////////////////////////////////////////////
+    // File change handler
+    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const file = e.target.files[0];
+            setAvatar(file);
+        }
+    };
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     return (
         <div className="container">
-             <div className='container mt-4' style={{ maxWidth: '900px', margin: '0 auto', padding: '2em', background: '#f7f7f7', borderRadius: '8px', border: '1px solid #007BFF', boxShadow: '5px 5px 15px rgba(0,0,0,0.1)' }}>
-            <h1 className="mt-5 text-center">Đăng ký</h1>
-            <div className="mb-3 col-md-6 col-12 mx-auto">
-                <form onSubmit={handleSubmit} className="form">
-                    <div className="mb-3">
-                        <label htmlFor="tenDangNhap" className="form-label">Tên đăng nhập</label>
-                        <input
-                            type="text"
-                            id="tenDangNhap"
-                            className="form-control"
-                            value={tenDangNhap}
-                            onChange={handleTenDangNhapChange}
-                        />
-                        <div style={{ color: "red" }}>{errorTenDangNhap}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input
-                            type="text"
-                            id="email"
-                            className="form-control"
-                            value={email}
-                            onChange={handleEmailChange}
-                        />
-                        <div style={{ color: "red" }}>{errorEmail}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="matKhau" className="form-label">Mật khẩu</label>
-                        <input
-                            type="password"
-                            id="matKhau"
-                            className="form-control"
-                            value={matKhau}
-                            onChange={handleMatKhauChange}
-                        />
-                        <div style={{ color: "red" }}>{errorMatKhau}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="matKhauLapLai" className="form-label">Nhập lại mật khẩu</label>
-                        <input
-                            type="password"
-                            id="matKhauLapLai"
-                            className="form-control"
-                            value={matKhauLapLai}
-                            onChange={handleMatKhauLapLaiChange}
-                        />
-                        <div style={{ color: "red" }}>{errorMatKhauLapLai}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="hoDem" className="form-label">Họ đệm</label>
-                        <input
-                            type="text"
-                            id="hoDem"
-                            className="form-control"
-                            value={hoDem}
-                            onChange={(e) => setHoDem(e.target.value)}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="ten" className="form-label">Tên</label>
-                        <input
-                            type="text"
-                            id="ten"
-                            className="form-control"
-                            value={ten}
-                            onChange={(e) => setTen(e.target.value)}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="soDienThoai" className="form-label">Số điện thoại</label>
-                        <input
-                            type="text"
-                            id="soDienThoai"
-                            className="form-control"
-                            value={soDienThoai}
-                            onChange={(e) => setSoDienThoai(e.target.value)}
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="gioiTinh" className="form-label">Giới tính</label>
-                        <input
-                            type="text"
-                            id="gioiTinh"
-                            className="form-control"
-                            value={gioiTinh}
-                            onChange={(e) => setGioiTinh(e.target.value)}
-                        />
-                    </div>
-                    <div className="text-center mt-4">
-                        <button type="submit" className="btn btn-primary">Đăng Ký</button>
-                        <div style={{ color: "green" }}>{thongBao}</div>
+            <div className='container mt-4 mb-4' style={{ maxWidth: '900px', margin: '0 auto', padding: '2em', background: '#f7f7f7', borderRadius: '8px', border: '1px solid #007BFF', boxShadow: '5px 5px 15px rgba(0,0,0,0.1)' }}>
+                <h1 className="mt-5 text-center">Đăng ký</h1>
+                <div className="mb-3 col-md-6 col-12 mx-auto">
+                    <form onSubmit={handleSubmit} className="form">
+                        <div className="mb-3">
+                            <label htmlFor="tenDangNhap" className="form-label">Tên đăng nhập</label>
+                            <input
+                                type="text"
+                                id="tenDangNhap"
+                                className="form-control"
+                                value={tenDangNhap}
+                                onChange={handleTenDangNhapChange}
+                            />
+                            <div style={{ color: "red" }}>{errorTenDangNhap}</div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email</label>
+                            <input
+                                type="text"
+                                id="email"
+                                className="form-control"
+                                value={email}
+                                onChange={handleEmailChange}
+                            />
+                            <div style={{ color: "red" }}>{errorEmail}</div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="matKhau" className="form-label">Mật khẩu</label>
+                            <input
+                                type="password"
+                                id="matKhau"
+                                className="form-control"
+                                value={matKhau}
+                                onChange={handleMatKhauChange}
+                            />
+                            <div style={{ color: "red" }}>{errorMatKhau}</div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="matKhauLapLai" className="form-label">Nhập lại mật khẩu</label>
+                            <input
+                                type="password"
+                                id="matKhauLapLai"
+                                className="form-control"
+                                value={matKhauLapLai}
+                                onChange={handleMatKhauLapLaiChange}
+                            />
+                            <div style={{ color: "red" }}>{errorMatKhauLapLai}</div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="hoDem" className="form-label">Họ đệm</label>
+                            <input
+                                type="text"
+                                id="hoDem"
+                                className="form-control"
+                                value={hoDem}
+                                onChange={(e) => setHoDen(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="ten" className="form-label">Tên</label>
+                            <input
+                                type="text"
+                                id="ten"
+                                className="form-control"
+                                value={ten}
+                                onChange={(e) => setTen(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="soDienThoai" className="form-label">Số điện thoại</label>
+                            <input
+                                type="text"
+                                id="soDienThoai"
+                                className="form-control"
+                                value={soDienThoai}
+                                onChange={(e) => setSoDienThoai(e.target.value)}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="gioiTinh" className="form-label">Giới tính</label>
+                            <select
+                                id="gioiTinh"
+                                className="form-control"
+                                value={gioiTinh}
+                                onChange={(e) => setGioiTinh(e.target.value)}
+                            > 
+                                <option value="">----</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nu">Nữ</option>
+                            </select>
+                        </div>
 
-                    </div>
-                </form>
+                        <div className="mb-3">
+                            <label htmlFor="avatar" className="form-label">Avatar</label>
+                            <input
+                                type="file"
+                                id="avatar"
+                                className="form-control"
+                                accept='images/*'
+                                onChange={handleAvatarChange}
+                            />
+                        </div>
+
+                        <div className="text-center mt-4">
+                            <button type="submit" className="btn btn-primary">Đăng Ký</button>
+                            <div style={{ color: "green" }}>{thongBao}</div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
         </div>
 
     );
-}
+} 
 
 export default DangKyNguoiDung;

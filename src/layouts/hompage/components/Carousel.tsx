@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { lay3SachMoiNhat } from "../../../api/SachAPI";
+import { lay10SachMoiNhat } from "../../../api/SachAPI";
 import SachModel from "../../../models/SachModel";
 import CarouselItem from "./CarouselItem";
 
@@ -10,7 +10,7 @@ const Carousel: React.FC = (props) => {
     const [baoLoi, setBaoLoi] = useState(null);
 
     useEffect(() => {
-        lay3SachMoiNhat().then(
+        lay10SachMoiNhat().then(
             kq => {
                 setDanhSachQuyenSach(kq.ketQua);
                 setDangTaiDuLieu(false);

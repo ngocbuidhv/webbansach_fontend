@@ -7,7 +7,7 @@ interface NavbarProps {
 }
 function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
 
-  const  [tuKhoaTamThoi, setTuKhoaTamThoi] = useState('');
+  const [tuKhoaTamThoi, setTuKhoaTamThoi] = useState('');
 
   const onSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTuKhoaTamThoi(e.target.value)
@@ -36,7 +36,7 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
             <li className="nav-item">
-            <NavLink className="nav-link active" aria-current="page" to ="/sach" onClick={() => window.location.href = '/'}>Trang chủ</NavLink>
+              <NavLink className="nav-link active" aria-current="page" to="/sach" onClick={() => window.location.href = '/'}>Trang chủ</NavLink>
 
             </li>
 
@@ -64,6 +64,12 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
               </ul>
             </li>
 
+            <li className='nav-item'>
+							<NavLink className='nav-link' to='/about'>
+								Giới thiệu
+							</NavLink>
+						</li>
+
             <li className="nav-item">
               <a className="nav-link" href="#">Liên hệ</a>
             </li>
@@ -73,19 +79,19 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
 
         {/* Tìm kiếm */}
         <div className="d-flex">
-      <input
-        className="form-control me-2"
-        type="search"
-        placeholder="Tìm kiếm"
-        aria-label="Search"
-        onChange={onSearchInputChange}
-        value={tuKhoaTamThoi}
-        onKeyUp={handleKeyUp} // Sử dụng sự kiện onKeyUp thay thế
-      />
-       <button className="btn btn-outline-success" type="button" onClick={handerSearch}>
-              <Search />
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Tìm kiếm"
+            aria-label="Search"
+            onChange={onSearchInputChange}
+            value={tuKhoaTamThoi}
+            onKeyUp={handleKeyUp} // Sử dụng sự kiện onKeyUp thay thế
+          />
+          <button className="btn btn-outline-success" type="button" onClick={handerSearch}>
+            <Search />
           </button>
-    </div>
+        </div>
 
         {/* Biểu tượng giỏ hàng */}
         <ul className="navbar-nav me-1">
@@ -99,9 +105,11 @@ function Navbar({ tuKhoaTimKiem, setTuKhoaTimKiem }: NavbarProps) {
         {/* Biểu tượng đăng nhập */}
         <ul className="navbar-nav me-1">
           <li className="nav-item">
-            <a className="nav-link" href="#">
+
+            <NavLink className="nav-link" to="/dang-nhap">
               <i className="fas fa-user"></i>
-            </a>
+            </NavLink>
+
           </li>
         </ul>
       </div>
