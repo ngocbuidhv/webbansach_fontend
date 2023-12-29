@@ -1,3 +1,10 @@
 strong {
   font-weight: bolder;
 }
+
+.logo h3{
+  color: #fff !important;
+  text-align: center;
+  margin-top: 30 px;
+  margin-bottom: 30 px;
+}

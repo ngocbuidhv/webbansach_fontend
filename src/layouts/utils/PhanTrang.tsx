@@ -42,7 +42,7 @@ export const PhanTrang: React.FC<PhanTrangInterface> = (props) => {
     }
 
     return (
-        <div className="container">
+        <div className="container text-center">
         <nav aria-label="...">
             <ul className="pagination">
                 <li className="page-item" onClick={()=>props.phanTrang(1)}>

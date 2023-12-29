@@ -1,10 +1,11 @@
 import { X, XCircle } from "react-bootstrap-icons";
-import { useState } from "react";
-import { themMotQuyenSach } from "../../api/SachAPI";
-import dinhDangSo from "../utils/DinhDangSo";
+import { useEffect, useState } from "react";
+import { themMotQuyenSach } from "../../../../api/SachAPI";
+import dinhDangSo from "../../../utils/DinhDangSo";
 import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { writer } from "repl";
+import { NavLink } from "react-router-dom";
 
 
 interface HinhAnh {
@@ -16,8 +17,7 @@ interface HinhAnh {
 interface props {
   setShowThemSach: any;
 }
-// const FormThemSach: React.FC<props> = ({ setShowThemSach }) => {
-const FormThemSach: React.FC<props> = () => {
+const FormThemSach: React.FC<props> = ({ setShowThemSach }) => {
   const [btnLoading, setBtnLoading] = useState(false);
   const [sach, setSach] = useState({
     tenSach: "", //có thể bị null
@@ -31,12 +31,18 @@ const FormThemSach: React.FC<props> = () => {
     ngonNgu: "",
     namXB: 0,
     isbn: "",
-    moTaChiTiet: ""
-    // danhSachTheLoai: [],
+    moTaChiTiet: "",
+    danhSachTheLoai: []
   });
 
   const [theLoai, setTheLoai] = useState("");
   const [danhSachTheLoai, setDanhSachTheLoai] = useState<string[]>([]);
+  const updateTheLoai = () => {
+    //lay ra the loai
+    if (theLoai && !danhSachTheLoai.includes(theLoai)) {
+      setDanhSachTheLoai(prevDanhSach => [...prevDanhSach, theLoai]);
+    }
+  };
   const [danhSachHinhAnh, setDanhSachHinhAnh] = useState<HinhAnh[]>([]);
 
   const handleHinhAnh = (e: any) => {
@@ -62,14 +68,14 @@ const FormThemSach: React.FC<props> = () => {
   };
 
 
-  const handleTheLoai = () => {
+  const getAllTheLoai = () => {
     //lay ra the loai
     if (theLoai) {
       danhSachTheLoai.push(theLoai);
-      //set ve rong
-      setTheLoai("");
     }
+    return danhSachTheLoai;
   };
+
   const handleXoaTheLoai = (theLoai: string) => {
     const newDanhSachTheLoai = danhSachTheLoai.filter(
       (theloai) => theloai !== theLoai
@@ -101,7 +107,8 @@ const FormThemSach: React.FC<props> = () => {
       ngonNgu: "",
       namXB: 0,
       isbn: "",
-      moTaChiTiet: ""
+      moTaChiTiet: "",
+      danhSachTheLoai: []
     });
   };
   const handleCong = () => {
@@ -118,6 +125,16 @@ const FormThemSach: React.FC<props> = () => {
       alert("Số lượng không thể âm!");
     }
   };
+
+
+
+  const capNhatMoTaChiTiet = (moTaChiTietMoi: string) => {
+    setSach((prevSach) => {
+      return { ...prevSach, moTaChiTiet: moTaChiTietMoi };
+    });
+  };
+
+
 
 
   return (
@@ -145,26 +162,26 @@ const FormThemSach: React.FC<props> = () => {
             {/* Nhập giá bán */}
             <div className="col">
               <div className="mb-3">
-                <label htmlFor="giaBan" className="form-label">Nhập giá bán</label>
+                <label htmlFor="giaBan" className="form-label">Nhập giá bán (VNĐ)</label>
                 <input
                   type="number"
                   id="giaBan"
                   className="form-control"
                   value={sach.giaBan}
-                  onChange={(e) => setSach({ ...sach, giaBan: parseInt(e.target.value) })}
+                  onChange={(e) => setSach({ ...sach, giaBan: parseFloat(e.target.value) })}
                 />
               </div>
             </div>
             {/* Nhập giá niêm yết */}
             <div className="col">
               <div className="mb-3">
-                <label htmlFor="giaNiemYet" className="form-label">Nhập niêm yết</label>
+                <label htmlFor="giaNiemYet" className="form-label">Nhập niêm yết (VNĐ)</label>
                 <input
                   type="number"
                   id="giaNiemYet"
                   className="form-control"
                   value={sach.giaNiemYet}
-                  onChange={(e) => setSach({ ...sach, giaNiemYet: parseInt(e.target.value) })}
+                  onChange={(e) => setSach({ ...sach, giaNiemYet: parseFloat(e.target.value) })}
                 />
               </div>
             </div>
@@ -241,7 +258,7 @@ const FormThemSach: React.FC<props> = () => {
             <div className=" col mb-3">
               <label htmlFor="namXB" className="form-label">Nhập năm xuất bản</label>
               <input
-                type="date"
+                type="number"
                 id="namXB"
                 className="form-control"
                 value={sach.namXB}
@@ -344,23 +361,41 @@ const FormThemSach: React.FC<props> = () => {
             </div>
           </div>
 
+          {/* Mô tả chi tiết  */}
           <div>
+            <div className="mb-3">
+              <label htmlFor="moTaChiTiet" className="form-label">Nhập mô tả chi tiết</label>
+              <CKEditor
+                editor={ClassicEditor}
+                data={sach.moTaChiTiet}
+                onChange={(event, editor) => {
+                  const moTaChiTietMoi: string = editor.getData();
+                  // Cập nhật mô tả chi tiết
+                  capNhatMoTaChiTiet(moTaChiTietMoi);
+                }}
+              ></CKEditor>
+            </div>
+          </div>
+
+          {/* nút thể loại */}
           <div className="mb-3">
-            <label htmlFor="moTaChiTiet" className="form-label">Nhập mô tả chi tiết</label>
-             <CKEditor editor={ClassicEditor} data={sach.moTaChiTiet} onReady={(editor)=>{
-              editor.editing.view.change((writer)=>{
-                writer.setStyle('height', '200px', editor.editing.view.document.getRoot())
-              })
-
-             }}
-              onChange={(event, editor)=>{
-                const data = editor.getData();
-                this.setState({...sach.moTaChiTiet: data})
-              }}
-             ></CKEditor>
+            <label htmlFor="theLoai" className="form-label">Thể Loại</label>
+            <select
+              id="theLoaij"
+              className="form-control"
+              value={theLoai}
+              onChange={(e) => setTheLoai(e.target.value)}
+            >
+              {danhSachTheLoai.map((theLoai, index) => (
+                <option key={index} value={theLoai}>
+                  {theLoai}
+                </option>
+              ))}
+              <option value="Hello">
+                Hello
+              </option>
+            </select>
           </div>
-          </div>
-
           {/* submit thêm sách */}
           <div className="d-flex justify-content-center container">
             <button
@@ -376,9 +411,9 @@ const FormThemSach: React.FC<props> = () => {
               )}
             </button>
           </div>
-        </form>
-      </div>
-    </div>
+        </form >
+      </div >
+    </div >
   );
 };
 

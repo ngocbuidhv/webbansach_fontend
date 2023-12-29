@@ -10,7 +10,7 @@ async function layAnhCuaMotSach(duongDan:string):Promise<HinhAnhModel[]>{
 
     // lấy ra json sach
     const responseData = response._embedded.hinhAnhs;
-    console.log(responseData);
+    // console.log(responseData);
 
     for(const key in responseData){
         ketQua.push({
@@ -56,4 +56,36 @@ export async function luuHinhAnhCuaMotSach(sach: any, danhSachHinhAnh: any, toke
         console.log(error);
     }
 
+}
+
+export async function capNhatHinhAnhChoMotQuyenSach(sach:any, danhSachHinhAnh:any) {
+    try {
+        const token = localStorage.getItem('token')
+        for(const hinhAnh of danhSachHinhAnh){
+            //kiểm tra hình ảnh đó đã tồn tại trong database hay chưa
+            if(hinhAnh.maHinhAnh != -1){//đã tồn tại
+                await xoaHinhAnh(hinhAnh.maHinhAnh, token)
+            }
+        }
+        //sau khi đã xoá tất cả những hình ảnh đã tồn tại trước đó
+        await luuHinhAnhCuaMotSach(sach, danhSachHinhAnh, token)
+    } catch (error) {
+        console.log("lỗi tại cập nhật hình ảnh sách: ",error);
+        
+    }
+}
+
+export async function xoaHinhAnh(maHinhAnh: number, token:string|null) {
+    try {
+        const response = fetch(`http://localhost:8080/hinh-anh/${maHinhAnh}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+        });
+    } catch (error) {
+        console.log("Lỗi xoá hình ảnh: ", error);
+        
+    }
 }

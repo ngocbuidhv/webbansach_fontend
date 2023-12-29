@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-import { text } from "stream/consumers";
-import { URLSearchParams } from "url";
+import parse from 'html-react-parser';
 import SachModel from "../../models/SachModel";
 import { laySachTheoMaSach } from "../../api/SachAPI";
-import { error } from "console";
 import DanhGiaSanPham from "./components/DanhGiaSanPham";
 import HinhAnhSanPham from "./components/HinhAnhSanPham";
 import renderRating from "../utils/SaoXepHang";
@@ -110,12 +107,17 @@ const ChiTietSanPham: React.FC = () => {
         );
     }
 
+    function capNhatMoTaChiTiet(moTaChiTietMoi: string) {
+        throw new Error("Function not implemented.");
+    }
+
     return (
         <div className="container">
             <div className="row mt-4 mb-4">
                 <div className="col-4">
                     <HinhAnhSanPham maSach={maSachNumber} />
                 </div>
+
                 <div className="col-8">
                     <div className="row">
                         <div className="col-8">
@@ -195,19 +197,25 @@ const ChiTietSanPham: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div>
-                <p style={{ textAlign: 'justify', textJustify: 'inter-word' }}>
-                    <strong>Nội dung: </strong>
-                    {thugon ? sach.moTaChiTiet : thuGonVanBan}
-                </p>
+
+            {/* Mô tả chi tiêt */}
+            <div className="mb-3">
+                <label htmlFor="moTaChiTiet" className="form-label">Nội dung:</label>
+                <div style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '5px', lineHeight: '1.6', textAlign: 'justify' }}>
+                    {thugon ? (sach.moTaChiTiet ? parse(sach.moTaChiTiet) : '') : (thuGonVanBan ? parse(thuGonVanBan) : '')}
+                </div>
                 {sach.moTaChiTiet && sach.moTaChiTiet.length > 900 && (
-                    <div style={{ textAlign: 'center' }}>
-                        <button className="btn btn-danger mt-4" style={{ backgroundColor: 'orange', borderColor: 'orange' }} onClick={chuyenVanBan}>
+                    <div style={{ textAlign: 'center', marginTop: '15px' }}>
+                        <button className="btn btn-danger" style={{ backgroundColor: 'orange', borderColor: 'orange' }} onClick={chuyenVanBan}>
                             {thugon ? 'Thu gọn' : 'Xem thêm'}
                         </button>
                     </div>
                 )}
             </div>
+
+
+
+
 
             <div className="row mt-4 mb-4">
                 <DanhGiaSanPham maSach={maSachNumber} />

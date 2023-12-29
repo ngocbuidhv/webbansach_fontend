@@ -2,7 +2,7 @@ import React from "react";
 import SachModel from "../models/SachModel";
 import { my_request } from "./Request";
 import { wait } from "@testing-library/user-event/dist/utils";
-import { luuHinhAnhCuaMotSach } from "./HinhAnhAPI";
+import { capNhatHinhAnhChoMotQuyenSach, luuHinhAnhCuaMotSach } from "./HinhAnhAPI";
 
 interface KetQuaInterface {
     ketQua: SachModel[];
@@ -18,7 +18,7 @@ async function laySach(duongDan: string): Promise<KetQuaInterface> {
 
     // Lấy ra json sach
     const responseData = response._embedded.saches;
-    console.log(responseData);
+    // console.log(responseData);
 
     // lấy thông tin trang
     const tongSoTrang: number = response.page.totalPages;
@@ -49,6 +49,15 @@ export async function layToanBoSach(trang: number): Promise<KetQuaInterface> {
 
     // Xác định endpoint
     const duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=12&page=${trang}`;
+
+    return laySach(duongDan);
+
+}
+
+export async function layToanBoSachAll(trang: number): Promise<KetQuaInterface> {
+
+    // Xác định endpoint
+    const duongDan: string = `http://localhost:8080/sach`;
 
     return laySach(duongDan);
 
@@ -131,8 +140,8 @@ export async function laySachTheoMaSach(maSach: number): Promise<SachModel | nul
 }
 
 export async function themMotQuyenSach(sach: any, danhSachHinhAnh: any, danhSachTheLoai: string[]) {
-    console.log(danhSachHinhAnh);
-    
+    // console.log(danhSachHinhAnh);
+
     const token = localStorage.getItem("token");
     const url = `http://localhost:8080/sach`;
     fetch(url, {
@@ -161,3 +170,65 @@ export async function themMotQuyenSach(sach: any, danhSachHinhAnh: any, danhSach
             console.log(error);
         });
 }
+
+export async function capNhatMotQuyenSach(maSach: number, sach: any, danhSachHinhAnh: any) {
+    const token = localStorage.getItem("token");
+    const url = `http://localhost:8080/admin/update-sach/${maSach}`;
+
+    fetch(url, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(sach),
+    })
+        .then((reponse) => {
+            if (reponse.ok) {
+                return reponse.json();
+            } else {
+                throw new Error("Lỗi ở handleSubmit");
+            }
+        })
+        .then((data) => {
+            //sao khi lưu sách thành công ta sẽ lưu hình ảnh và thể loại
+            luuHinhAnhCuaMotSach(data, danhSachHinhAnh, token);
+            // themTheLoaiChoMotQuyenSach(data, danhSachTheLoai);
+            alert("Đã cập nhật sách thành công!");
+
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+
+
+export async function lay6CuonSach(trang: number): Promise<KetQuaInterface> {
+
+    // Xác định endpoint
+    const duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=6&page=${trang}`;
+
+    return laySach(duongDan);
+
+}
+
+export async function xoaSachTheoMaSach(maSach: number) {
+    try {
+        const token = localStorage.getItem("token");
+        const response = fetch(`http://localhost:8080/admin/delete-sach/${maSach}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+        });
+    } catch (error) {
+        console.log("Lỗi xoá hình ảnh: ", error);
+
+    }
+}
+
+
+
+
